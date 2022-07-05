@@ -9,18 +9,25 @@ class NotesView {
   }
 
   displayNotes() {
-    const note = document.querySelector('#new-note-input').value;
-    this.model.addNote(note)
+    document.querySelectorAll('.note').forEach(element => {
+      element.remove();
+    });
+    const input = document.querySelector('#new-note-input');
+    this.model.addNote(input.value)
     const notes = this.model.getNotes();
+
+    this._addToPage(notes);
     
+    input.value = '';
+  }
+
+  _addToPage(notes) {
     notes.forEach (note => {
       const noteEl = document.createElement('div');
       noteEl.innerText = note;
       noteEl.className = 'note';
       this.mainContainerEl.append(noteEl);
     })
-    
-
   }
 }
 
