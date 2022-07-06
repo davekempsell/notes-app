@@ -3,6 +3,7 @@
  */
 
 const fs = require('fs');
+const NotesApi = require('./notesApi');
 const NotesModel = require('./notesModel');
 const NotesView = require('./notesView');
  
@@ -13,7 +14,8 @@ const NotesView = require('./notesView');
 
    it('adds new note from user text input', () => {
     const model = new NotesModel();
-    const view = new NotesView(model);
+    const api = new NotesApi();
+    const view = new NotesView(model, api);
 
     const noteEl = document.querySelector('#new-note-input');
     const buttonEl = document.querySelector('#add-note-button');
@@ -25,7 +27,8 @@ const NotesView = require('./notesView');
    })
    it('adds two notes when two new notes are added', () => {
     const model = new NotesModel();
-    const view = new NotesView(model);
+    const api = new NotesApi();
+    const view = new NotesView(model, api);
 
     const input = document.querySelector('#new-note-input');
     const button = document.querySelector('#add-note-button');
@@ -36,4 +39,13 @@ const NotesView = require('./notesView');
 
     expect(document.querySelectorAll('div.note').length).toEqual(2)
    })
+  //  it('displays notes from API with displayNotesFromApi function', () => {
+  //   const model = new NotesModel();
+  //   const api = new NotesApi();
+  //   const view = new NotesView(model, api);
+
+  //   view.displayNotesFromApi();
+
+
+  //  })
  });

@@ -4,6 +4,20 @@
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
 
+  // notesApi.js
+  var require_notesApi = __commonJS({
+    "notesApi.js"(exports, module) {
+      var NotesApi2 = class {
+        loadNotes(callback) {
+          fetch("http://localhost:3000/notes").then((response) => response.json()).then((data) => {
+            callback(data);
+          });
+        }
+      };
+      module.exports = NotesApi2;
+    }
+  });
+
   // notesModel.js
   var require_notesModel = __commonJS({
     "notesModel.js"(exports, module) {
@@ -29,7 +43,8 @@
   var require_notesView = __commonJS({
     "notesView.js"(exports, module) {
       var NotesView2 = class {
-        constructor(model2) {
+        constructor(model2, api2) {
+          this.api = api2;
           this.model = model2;
           this.mainContainerEl = document.querySelector("#main-container");
           this.button = document.querySelector("#add-note-button");
@@ -61,9 +76,11 @@
   });
 
   // index.js
+  var NotesApi = require_notesApi();
   var NotesModel = require_notesModel();
   var NotesView = require_notesView();
   var model = new NotesModel();
-  var view = new NotesView(model);
+  var api = new NotesApi();
+  var view = new NotesView(model, api);
   view.displayNotes();
 })();
