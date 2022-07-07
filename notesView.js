@@ -23,10 +23,13 @@ class NotesView {
   }
 
   displayNotesFromApi() {
-    this.api.loadNotes((notes) => {
+    const loadNotes = this.api.loadNotes((notes) => {
       this.model.setNotes(notes);
       this.displayNotes();
     });
+    if (loadNotes === 'Error!') {
+      this.displayError();
+    }
   }
 
   _addToPage(notes) {
@@ -36,6 +39,13 @@ class NotesView {
       noteEl.className = 'note';
       this.mainContainerEl.append(noteEl);
     })
+  }
+
+  displayError() {
+    const errorMessage = document.createElement('div');
+    errorMessage.innerText = "Error!"
+    errorMessage.className = 'error'
+    this.mainContainerEl.append(errorMessage)
   }
 }
 

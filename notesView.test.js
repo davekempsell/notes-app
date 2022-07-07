@@ -18,7 +18,7 @@ require('jest-fetch-mock').enableMocks()
     const model = new NotesModel();
     const fakeApi = {
       createNote: (note) => {
-        
+
       }
     }    
     
@@ -62,5 +62,22 @@ require('jest-fetch-mock').enableMocks()
     view.displayNotesFromApi();
 
     expect(document.body.querySelectorAll('div.note').length).toEqual(2);
+  })
+  it('displays an error message if there is a connection error', () => {
+    const model = new NotesModel();
+    const fakeApi = {
+      loadNotes: () => {
+        return "Error!"
+      }
+      }
+    
+    const view = new NotesView(model, fakeApi);
+
+    // view.displayNotesFromApi();
+    view.displayError()
+
+    expect(document.body.querySelectorAll('div.note').length).toEqual(0);
+    expect(document.body.querySelectorAll('div.error').length).toEqual(1);
+    expect(document.body.querySelectorAll('div.error')[0].innerText).toEqual("Error!");
   })
  });

@@ -5,6 +5,11 @@ class NotesApi {
       .then(data => {
         callback(data);
       })
+      .catch((error) => {
+        console.log(error);
+        return "Error!";
+      })
+      
   }
 
   createNote(note){
