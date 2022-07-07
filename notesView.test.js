@@ -6,6 +6,8 @@ const fs = require('fs');
 const NotesApi = require('./notesApi');
 const NotesModel = require('./notesModel');
 const NotesView = require('./notesView');
+
+require('jest-fetch-mock').enableMocks()
  
  describe('notesView class', () => {
    beforeEach(() => {
@@ -39,13 +41,21 @@ const NotesView = require('./notesView');
 
     expect(document.querySelectorAll('div.note').length).toEqual(2)
    })
-  //  it('displays notes from API with displayNotesFromApi function', () => {
-  //   const model = new NotesModel();
-  //   const api = new NotesApi();
-  //   const view = new NotesView(model, api);
+   it('displays notes from API with displayNotesFromApi function', () => {
+    const model = new NotesModel();
+    const fakeApi = {
+      loadNotes: () => {
+        model.setNotes(['An example note', 'Another example note']);
+        view.displayNotes();
+      }
+    }
+    const view = new NotesView(model, fakeApi);
+    
+    // fetch.mockResponseOnce(JSON.stringify(
+    //   ['Note']
+    // ))
+    view.displayNotesFromApi();
 
-  //   view.displayNotesFromApi();
-
-
-  //  })
+    expect(document.body.querySelectorAll('div.note').length).toEqual(2);
+  })
  });

@@ -23,16 +23,21 @@
     "notesModel.js"(exports, module) {
       var NotesModel2 = class {
         constructor() {
-          this.list = [];
+          this.array = [];
         }
         getNotes() {
-          return this.list;
+          return this.array;
         }
         addNote(note) {
-          this.list.push(note);
+          this.array.push(note);
         }
         reset() {
-          this.list = [];
+          this.array = [];
+        }
+        setNotes(notes) {
+          notes.forEach((note) => {
+            this.array.push(note);
+          });
         }
       };
       module.exports = NotesModel2;
@@ -49,18 +54,24 @@
           this.mainContainerEl = document.querySelector("#main-container");
           this.button = document.querySelector("#add-note-button");
           this.button.addEventListener("click", () => {
+            const input = document.querySelector("#new-note-input");
+            this.model.addNote(input.value);
             this.displayNotes();
+            input.value = "";
           });
         }
         displayNotes() {
           document.querySelectorAll(".note").forEach((element) => {
             element.remove();
           });
-          const input = document.querySelector("#new-note-input");
-          this.model.addNote(input.value);
           const notes = this.model.getNotes();
           this._addToPage(notes);
-          input.value = "";
+        }
+        displayNotesFromApi() {
+          this.api.loadNotes((notes) => {
+            this.model.setNotes(notes);
+            this.displayNotes();
+          });
         }
         _addToPage(notes) {
           notes.forEach((note) => {
@@ -82,5 +93,5 @@
   var model = new NotesModel();
   var api = new NotesApi();
   var view = new NotesView(model, api);
-  view.displayNotes();
+  view.displayNotesFromApi();
 })();
