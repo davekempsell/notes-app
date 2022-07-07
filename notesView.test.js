@@ -17,13 +17,8 @@ require('jest-fetch-mock').enableMocks()
    it('adds new note from user text input', () => {
     const model = new NotesModel();
     const fakeApi = {
-      loadNotes: () => {
-        model.setNotes(['An example note']);
-        view.displayNotes();
-
-      },
-      createNote:(note) => {
-
+      createNote: (note) => {
+        
       }
     }    
     

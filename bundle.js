@@ -13,6 +13,15 @@
             callback(data);
           });
         }
+        createNote(note) {
+          fetch("http://localhost:3000/notes", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(note)
+          });
+        }
       };
       module.exports = NotesApi2;
     }
@@ -56,6 +65,7 @@
           this.button.addEventListener("click", () => {
             const input = document.querySelector("#new-note-input");
             this.model.addNote(input.value);
+            this.api.createNote(input.value);
             this.displayNotes();
             input.value = "";
           });
