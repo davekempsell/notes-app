@@ -32,4 +32,25 @@ describe('NotesAPI class', () => {
       // expect(data.id).toBe(123);
     });
   });
+  it('should post a request to the notes backend to create a new note' , () => {
+    const api = new NotesApi();
+    const data = 'Test data'
+    
+    fetch.mockResponseOnce({
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    api.createNote(data)
+
+    fetch.mockResponseOnce(JSON.stringify(
+      ['Test data']
+    ))
+
+    api.loadNotes((response) => {
+      expect(response).toEqual(['Test data'])
+    });
+  });
 });
