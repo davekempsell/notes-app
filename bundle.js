@@ -14,12 +14,13 @@
           });
         }
         createNote(note) {
+          const data = { content: note };
           fetch("http://localhost:3000/notes", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
             },
-            body: JSON.stringify(note)
+            body: JSON.stringify(data)
           });
         }
       };
