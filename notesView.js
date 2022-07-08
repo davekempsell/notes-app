@@ -23,13 +23,12 @@ class NotesView {
   }
 
   displayNotesFromApi() {
-    const loadNotes = this.api.loadNotes((notes) => {
+    this.api.loadNotes((notes) => {
       this.model.setNotes(notes);
       this.displayNotes();
+    }, () => {
+      this.displayError()
     });
-    if (loadNotes === 'Error!') {
-      this.displayError();
-    }
   }
 
   _addToPage(notes) {
@@ -43,7 +42,7 @@ class NotesView {
 
   displayError() {
     const errorMessage = document.createElement('div');
-    errorMessage.innerText = "Error!"
+    errorMessage.innerText = "Oops, looks like something went wrong!" 
     errorMessage.className = 'error'
     this.mainContainerEl.append(errorMessage)
   }

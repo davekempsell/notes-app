@@ -8,12 +8,11 @@
   var require_notesApi = __commonJS({
     "notesApi.js"(exports, module) {
       var NotesApi2 = class {
-        loadNotes(callback) {
+        loadNotes(callback, callback2) {
           fetch("http://localhost:3000/notes").then((response) => response.json()).then((data) => {
             callback(data);
-          }).catch((error) => {
-            console.log(error);
-            return "Error!";
+          }).catch(() => {
+            callback2();
           });
         }
         createNote(note) {
@@ -82,13 +81,12 @@
           this._addToPage(notes);
         }
         displayNotesFromApi() {
-          const loadNotes = this.api.loadNotes((notes) => {
+          this.api.loadNotes((notes) => {
             this.model.setNotes(notes);
             this.displayNotes();
-          });
-          if (loadNotes === "Error!") {
+          }, () => {
             this.displayError();
-          }
+          });
         }
         _addToPage(notes) {
           notes.forEach((note) => {
@@ -100,7 +98,7 @@
         }
         displayError() {
           const errorMessage = document.createElement("div");
-          errorMessage.innerText = "Error!";
+          errorMessage.innerText = "Oops, looks like something went wrong!";
           errorMessage.className = "error";
           this.mainContainerEl.append(errorMessage);
         }

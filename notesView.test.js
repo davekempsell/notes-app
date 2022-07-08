@@ -67,17 +67,16 @@ require('jest-fetch-mock').enableMocks()
     const model = new NotesModel();
     const fakeApi = {
       loadNotes: () => {
-        return "Error!"
+        view.displayError()
       }
-      }
+    }
     
     const view = new NotesView(model, fakeApi);
 
-    // view.displayNotesFromApi();
-    view.displayError()
+    view.displayNotesFromApi()
 
     expect(document.body.querySelectorAll('div.note').length).toEqual(0);
     expect(document.body.querySelectorAll('div.error').length).toEqual(1);
-    expect(document.body.querySelectorAll('div.error')[0].innerText).toEqual("Error!");
+    expect(document.body.querySelectorAll('div.error')[0].innerText).toEqual("Oops, looks like something went wrong!");
   })
  });
