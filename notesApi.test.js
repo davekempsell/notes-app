@@ -34,7 +34,7 @@ describe('NotesAPI class', () => {
   });
   it('should post a request to the notes backend to create a new note' , () => {
     const api = new NotesApi();
-    const data = 'Test data'
+    const data = {content: 'Test data'}
     
     fetch.mockResponseOnce({
       method: 'POST', // or 'PUT'
