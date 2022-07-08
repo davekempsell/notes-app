@@ -45,6 +45,8 @@
           }).then((response) => response.json()).then((data2) => {
             callback(data2.emojified_text);
             console.log(`data: ${data2.emojified_text}`);
+          }).catch(() => {
+            return input;
           });
         }
       };
@@ -91,17 +93,11 @@
           this.addButton = document.querySelector("#add-note-button");
           this.addButton.addEventListener("click", () => {
             const input = document.querySelector("#new-note-input");
-            if (input.value === ":smile:") {
-              this.api.fetchEmoji(emoji, (data) => {
-                this.model.addNote(data);
-                this.api.createNote(data);
-                this.displayNotes();
-              });
-            } else {
-              this.model.addNote(input.value);
-              this.api.createNote(input.value);
+            this.api.fetchEmoji(input.value, (data) => {
+              this.model.addNote(data);
+              this.api.createNote(data);
               this.displayNotes();
-            }
+            });
             input.value = "";
           });
           this.resetButton = document.querySelector("#reset-button");

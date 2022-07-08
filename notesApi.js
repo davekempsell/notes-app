@@ -45,6 +45,9 @@ class NotesApi {
       callback(data.emojified_text)
       console.log(`data: ${data.emojified_text}`)
     })
+    .catch( () => {
+      return input
+    })
   }
 }
 
