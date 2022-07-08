@@ -15,9 +15,11 @@ class NotesModel {
   }
 
   setNotes(notes) {
+    if(notes != null) {
     notes.forEach (note => {
       this.array.push(note);
     });
+  }
   }
 }
 

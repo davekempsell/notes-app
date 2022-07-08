@@ -21,6 +21,12 @@ class NotesApi {
       body: JSON.stringify(data),
     })
   }
+
+  resetNotes() {
+    fetch('http://localhost:3000/notes', {
+      method: 'DELETE'
+    })
+  }
 }
 
 module.exports = NotesApi
