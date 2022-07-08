@@ -116,4 +116,25 @@ require('jest-fetch-mock').enableMocks()
     view.displayNotesFromApi();
     expect(document.querySelectorAll('div.note').length).toEqual(0)
   })
+  it('replaces emoji shortcuts in input text with emojis', () => {
+    const model = new NotesModel();
+    const fakeApi = {
+      createNote: (note) => {
+
+      },
+      fetchEmoji: (input) => {
+        return ["😄"]
+      }
+    }    
+    
+    const view = new NotesView(model, fakeApi);
+
+    const noteEl = document.querySelector('#new-note-input');
+    const buttonEl = document.querySelector('#add-note-button');
+    noteEl.value = ':smile:'
+    buttonEl.click();
+
+    expect(document.querySelectorAll('div.note').length).toEqual(1)
+    expect(document.querySelectorAll('div.note')[0].innerText).toEqual("😄")
+  })
  });

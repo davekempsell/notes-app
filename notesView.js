@@ -5,10 +5,18 @@ class NotesView {
     this.mainContainerEl = document.querySelector('#main-container')
     this.addButton = document.querySelector('#add-note-button');
     this.addButton.addEventListener('click', () => {
-      const input = document.querySelector('#new-note-input');
-      this.model.addNote(input.value)
-      this.api.createNote(input.value)
-      this.displayNotes()
+      const input = document.querySelector('#new-note-input')
+      if(input.value === ':smile:') {
+        this.api.fetchEmoji(emoji, (data) => {
+          this.model.addNote(data)
+          this.api.createNote(data)
+          this.displayNotes()
+        });
+      } else {
+        this.model.addNote(input.value)
+        this.api.createNote(input.value)
+        this.displayNotes()
+      }
       input.value = '';
     })
     this.resetButton = document.querySelector('#reset-button');

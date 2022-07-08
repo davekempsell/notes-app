@@ -30,6 +30,23 @@
             method: "DELETE"
           });
         }
+        fetchEmoji(input, callback) {
+          const data = { text: input };
+          let newData = "test";
+          let setValue = (data2) => {
+            newData = data2;
+          };
+          fetch("https://makers-emojify.herokuapp.com/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+          }).then((response) => response.json()).then((data2) => {
+            callback(data2.emojified_text);
+            console.log(`data: ${data2.emojified_text}`);
+          });
+        }
       };
       module.exports = NotesApi2;
     }
@@ -74,9 +91,17 @@
           this.addButton = document.querySelector("#add-note-button");
           this.addButton.addEventListener("click", () => {
             const input = document.querySelector("#new-note-input");
-            this.model.addNote(input.value);
-            this.api.createNote(input.value);
-            this.displayNotes();
+            if (input.value === ":smile:") {
+              this.api.fetchEmoji(emoji, (data) => {
+                this.model.addNote(data);
+                this.api.createNote(data);
+                this.displayNotes();
+              });
+            } else {
+              this.model.addNote(input.value);
+              this.api.createNote(input.value);
+              this.displayNotes();
+            }
             input.value = "";
           });
           this.resetButton = document.querySelector("#reset-button");

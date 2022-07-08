@@ -8,7 +8,6 @@ class NotesApi {
       .catch(() => {
         callback2();
       })
-      
   }
 
   createNote(note){
@@ -25,6 +24,26 @@ class NotesApi {
   resetNotes() {
     fetch('http://localhost:3000/notes', {
       method: 'DELETE'
+    })
+  }
+
+  fetchEmoji(input, callback) {
+    const data = {text: input}
+    let newData = "test"
+    let setValue = (data) => {
+      newData = data
+    }
+    fetch('https://makers-emojify.herokuapp.com/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then((data) => {
+      callback(data.emojified_text)
+      console.log(`data: ${data.emojified_text}`)
     })
   }
 }
