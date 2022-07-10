@@ -18,6 +18,10 @@ require('jest-fetch-mock').enableMocks()
     const fakeApi = {
       createNote: (note) => {
 
+      },
+      fetchEmoji: (input) => {
+        model.addNote("An example note");
+        view.displayNotes();
       }
     }    
     
@@ -69,7 +73,11 @@ require('jest-fetch-mock').enableMocks()
       },
       createNote: (note) => {
 
-      } 
+      },
+      fetchEmoji: (input) => {
+        model.addNote("An example note");
+        view.displayNotes();
+      }
     }
 
     const view = new NotesView(model, fakeApi);
@@ -97,7 +105,11 @@ require('jest-fetch-mock').enableMocks()
       },
       createNote: (note) => {
 
-      } 
+      },
+      fetchEmoji: (input) => {
+        model.addNote("An example note");
+        view.displayNotes();
+      }
     }
 
     const view = new NotesView(model, fakeApi);
@@ -123,7 +135,8 @@ require('jest-fetch-mock').enableMocks()
 
       },
       fetchEmoji: (input) => {
-        return ["😄"]
+        model.addNote("😄");
+        view.displayNotes();
       }
     }    
     
